@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "echo-ci-cd-test",
+    "title": "Beer Catalog API",
     "description": "An API for querying beer catalog of Acme Inc.",
     "contact": {
       "name": "Laurent Broudoux",
@@ -12,7 +12,7 @@
       "name": "MIT License",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "1.0"
+    "version": "1.9"
   },
   "basePath": "/api",
   "paths": {
