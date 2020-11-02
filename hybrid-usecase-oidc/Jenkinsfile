@@ -15,7 +15,7 @@ node() {
   stage("Prepare") {
     service = toolbox.prepareThreescaleService(
         openapi: [filename: "hybrid-usecase-oidc/swagger.json"],
-        environment: [ baseSystemName: "oidc-3scale-instance",
+        environment: [ baseSystemName: "hybrid_usecase_oidc",
                        publicBasePath: "/v1",
                        publicStagingWildcardDomain: params.PUBLIC_STAGING_WILDCARD_DOMAIN,
                        publicProductionWildcardDomain: params.PUBLIC_PRODUCTION_WILDCARD_DOMAIN,
@@ -28,7 +28,7 @@ node() {
                    secretName: params.SECRET_NAME],
         service: [:],
         applications: [
-            [ name: "my-test-app-ci-cd-oidc", description: "Creating by Jenkins ci/cd", plan: "test", account: params.DEVELOPER_ACCOUNT_ID ]
+            [ name: "my-test-app", description: "This is used for tests", plan: "test", account: params.DEVELOPER_ACCOUNT_ID ]
         ],
         applicationPlans: [
           [ systemName: "test", name: "Test", defaultPlan: true, published: true ],
@@ -40,6 +40,11 @@ node() {
     //echo "toolbox version = " + service.toolbox.getToolboxVersion()
   }
 
+  stage("Import OpenAPI") {
+    service.importOpenAPI()
+    echo "Service with system_name ${service.environment.targetSystemName} created !"
+  }
+
   stage("Create an Application Plan") {
     service.applyApplicationPlans()
   }
@@ -47,13 +52,6 @@ node() {
   stage("Create an Application") {
     service.applyApplication()
   }
-        
-  stage("Import OpenAPI") {
-    service.importOpenAPI()
-    echo "Service with system_name ${service.environment.targetSystemName} created !"
-  }
-
-
 
   stage("Run integration tests") {
     def proxy = service.readProxy("sandbox")
