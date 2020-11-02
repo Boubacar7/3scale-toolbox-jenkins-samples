@@ -40,11 +40,6 @@ node() {
     //echo "toolbox version = " + service.toolbox.getToolboxVersion()
   }
 
-  stage("Import OpenAPI") {
-    service.importOpenAPI()
-    echo "Service with system_name ${service.environment.targetSystemName} created !"
-  }
-
   stage("Create an Application Plan") {
     service.applyApplicationPlans()
   }
@@ -52,6 +47,13 @@ node() {
   stage("Create an Application") {
     service.applyApplication()
   }
+        
+  stage("Import OpenAPI") {
+    service.importOpenAPI()
+    echo "Service with system_name ${service.environment.targetSystemName} created !"
+  }
+
+
 
   stage("Run integration tests") {
     def proxy = service.readProxy("sandbox")
