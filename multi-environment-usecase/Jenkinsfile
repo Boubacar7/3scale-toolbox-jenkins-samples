@@ -35,13 +35,7 @@ node() {
           [ systemName: "test", name: "Test", defaultPlan: true, published: true ]
         ]
     )
-
-    // Import OpenAPI
-     stage("Import OpenAPI") {
-    service.importOpenAPI()
-    echo "Service with system_name ${service.environment.targetSystemName} created !"
-  }
-    // Create an Application Plan
+ // Create an Application Plan
     stage("Create an Application Plan") {
     service.applyApplicationPlans()
   }
@@ -49,6 +43,12 @@ node() {
    stage("Create an Application") {
     service.applyApplication()
   }
+    // Import OpenAPI
+     stage("Import OpenAPI") {
+    service.importOpenAPI()
+    echo "Service with system_name ${service.environment.targetSystemName} created !"
+  }
+   
     // Run integration tests
     // To run the integration tests when using APIcast SaaS instances, we need
     // to fetch the proxy definition to extract the staging public url
