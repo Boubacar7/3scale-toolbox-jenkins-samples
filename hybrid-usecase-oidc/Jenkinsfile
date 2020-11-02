@@ -15,7 +15,7 @@ node() {
   stage("Prepare") {
     service = toolbox.prepareThreescaleService(
         openapi: [filename: "hybrid-usecase-oidc/swagger.json"],
-        environment: [ baseSystemName: "hybrid_usecase_oidc",
+        environment: [ baseSystemName: "oidc-3scale-instance",
                        publicBasePath: "/v1",
                        publicStagingWildcardDomain: params.PUBLIC_STAGING_WILDCARD_DOMAIN,
                        publicProductionWildcardDomain: params.PUBLIC_PRODUCTION_WILDCARD_DOMAIN,
